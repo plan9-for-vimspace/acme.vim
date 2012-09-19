@@ -18,7 +18,9 @@ let g:gui_offset = 0
 
 " this only works reliably when there is only one window open, for now
 function! MoveMouse(line, column)
-	let l:x = a:column * g:cell_width
+	let l:numbers_offset = &number * (&numberwidth * g:cell_width) 
+	let l:fdc_offset = &fdc * g:cell_width
+	let l:x = l:fdc_offset + l:numbers_offset + (a:column * g:cell_width)
 	let l:view_offset = (line("w0")- 1) * g:cell_height
 	let l:y = g:gui_offset + (a:line * g:cell_height - l:view_offset)
 	call system("xdotool search --name " . v:servername . " mousemove --window %1 " . l:x . " " . l:y . " click 1")
