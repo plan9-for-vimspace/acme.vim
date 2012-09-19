@@ -1,7 +1,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
-"acme.vim
+" acme.vim
 "
 " acme-like mouse actions for vim.
 "
@@ -26,15 +26,31 @@ function! MoveMouse(line, column)
 	call system("xdotool search --name " . v:servername . " mousemove --window %1 " . l:x . " " . l:y . " click 1")
 endfunction
 
-function! Execute(cmd)
+function! EscapeForBang(text)
+	return substitute(a:text, "!", "\\\\!", "g")
+endfunction
+
+function! Exec(text)
 	botright new
-	exec "0read !".a:cmd
+	exec "0read !" . EscapeForBang(a:text)
 	setlocal buftype=nofile
 endfunction
 
 function! B2(text)
+	if executable(split(a:text)[0])
+		call Exec(a:text)
+	endif
+endfunction
+
+function! NB2(text)
 	if executable(a:text)
-		call Execute(a:text)
+		call Exec(a:text)
+	else
+		if a:text[0] == "|"
+		elseif a:text[0] == "<"
+		elseif a:text[0] == ">"
+			call Exec("echo '".getreg("*"). "' | ". a:text[1:])
+		endif
 	endif
 endfunction
 
@@ -86,8 +102,11 @@ function! B3(text)
 	endif
 endfunction
 
-nnoremap <silent> <MiddleMouse> <LeftMouse>:call B2(expand('<cword>'))<cr>
+" change B2 for NB2 here for <|> support (not yet complete)
+nnoremap <silent> <MiddleMouse> <LeftMouse>:call B2(expand('<cWORD>'))<cr>
 nnoremap <silent> <RightMouse> <LeftMouse>:call B3(expand('<cWORD>'))<cr>
+vnoremap <silent> <MiddleMouse> :call B2(getreg("*"))<cr>
+vnoremap <silent> <RightMouse> :call B3(getreg("*"))<cr>
 
 " acme.vim:13
 " acme.vim:#24
@@ -97,3 +116,5 @@ nnoremap <silent> <RightMouse> <LeftMouse>:call B3(expand('<cWORD>'))<cr>
 " acme.vim:$
 " /etc/fstab:2,3
 " ls
+" grep -nr function! acme.vim
+" >cat
