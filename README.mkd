@@ -1,0 +1,21 @@
+# acme.vim
+
+[acme](http://plan9.bell-labs.com/sys/doc/acme/acme.html)-like mouse bindings
+for vim.
+
+## Features
+
+* B3 actions: search forward, file opening (no compound addresses yet)
+* B2 execution (partial)
+* Mouse position movement using xdotool (linux only)
+
+## TODO
+
+* visual-mode support (B2 on selections, etc.)
+
+## Limitations/Known bugs
+
+* mouse movement only works reliably when there's only one window open (splits
+  mess it up)
+* mouse movement needs manual tweaking to work 
+
