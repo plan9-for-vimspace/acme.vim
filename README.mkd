@@ -1,3 +1,12 @@
+
+
+# IMPORTANT
+
+I've re-implemented the acme emulation functionality from scratch in
+[fmoralesc/plan9-for-vimspace](http://github.com/fmoralesc/plan9-for-vimspace). 
+The new version supports compound addresses and provides some extra utilities. This
+version should be considered as deprecated.
+
 # acme.vim
 
 [acme](http://plan9.bell-labs.com/sys/doc/acme/acme.html)-like mouse bindings
